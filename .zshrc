@@ -126,7 +126,7 @@ git_up() {
    git svn rebase -l)
   popd
 }
-gdbtool() { emacs --eval "(gdb \"gdb --annotate=3 -i=mi $*\")";}
+lldbtool() { emacs -nw --eval "(lldb \"lldb $*\")";}
 llvmdifftidy() {
   pushd ~/development/build/llvm
   git diff -U0 master | ~/clang_tools/llvm/tools/clang/tools/extra/clang-tidy/tool/clang-tidy-diff.py -p 1 -clang-tidy-binary ~/clang_tools/bin/clang-tidy -fix
