@@ -1,1 +1,2 @@
-command script import /home/abataev/clang_tools/llvm/utils/lldbDataFormatters.py
+command script import ~/clang_tools/llvm/utils/lldbDataFormatters.py
+command script import ~/clang_tools/llvm/tools/clang/utils/ClangDataFormat.py
