@@ -18,7 +18,7 @@
     " The following are examples of different formats supported.
     " Keep Plugin commands between vundle#begin/end.
     " plugin on GitHub repo
-    " Plugin 'tpope/vim-fugitive'
+    " Plug 'tpope/vim-fugitive'
     " plugin from http://vim-scripts.org/vim/scripts.html
     Plug 'L9'
     " Git plugin not hosted on GitHub
@@ -84,6 +84,7 @@
     Plug 'tpope/vim-commentary'
     Plug 'adelarsq/vim-grimmjow'
     " Plug 'gilligan/vim-lldb'
+    Plug 'airblade/vim-gitgutter'
 
     " All of your Plugins must be added before the following line
     call plug#end()            " required
@@ -172,7 +173,16 @@
     set wrapmargin=0
     set formatoptions=qrn1
     set colorcolumn=81
+    highlight GitGutterAdd ctermbg=Red cterm=bold
     highlight ColorColumn ctermbg=red
+    let g:gitgutter_override_sign_column_highlight = 0
+    let g:gitgutter_highlight_lines = 0
+    highlight SignColumn ctermbg = Green
+    highlight SignColumn guibg = Green
+    " let g:gitgutter_enabled = 0
+    let g:gitgutter_signs = 0
+    let g:gitgutter_realtime = 0
+    let g:gitgutter_eager = 0
     "highlight ExtraWhitespace ctermbg=darkgreen guibg=darkgreen
     "match ExtraWhitespace /\s\+\%#\@<!$/
 
@@ -292,6 +302,9 @@
     " Shortcut to opening a virtual split to right of current pane
     " Makes more sense than opening to the left
     nmap <leader>bv :bel vsp
+
+    " Revert line to HEAD
+    vmap <silent> u <esc>:Gdiff<cr>gv:diffget<cr><c-w><c-w>ZZ
 
     " Saves file when Vim window loses focus
     au FocusLost * :wa
@@ -454,7 +467,7 @@
     set listchars=tab:»-
     set list
     let g:DoxygenToolkit_commentType="C++"
-    let g:DoxygenToolkit_briefTag_pre="\\brief "
+    let g:DoxygenToolkit_briefTag_pre=" "
     let g:DoxygenToolkit_paramTag_pre="\\param "
     let g:DoxygenToolkit_returnTag="\\returns "
     nnoremap <c-d> :Dox<CR>
@@ -462,7 +475,7 @@
     inoremap <c-d> <Esc>:Dox<CR>
     nnoremap <F5> :GundoToggle<CR>
 
-    let g:yanktmp_file = '~/.vim/tmp/.tmp_exchange'
+    let g:yanktmp_file = "/home/abataev/.vim/tmp/.tmp_exchange"
     vmap <silent> ,y :call YanktmpYank()<CR>
     nmap <silent> ,y :call YanktmpYank()<CR>
     map <silent> ,p :call YanktmpPaste_p()<CR>
