@@ -108,6 +108,9 @@ llninja() {
   popd
 }
 git_up() {
+  pushd ~/development/build/llvm/projects/compiler-rt
+  git pull --rebase
+  popd
   pushd ~/development/build/llvm/projects/openmp
   git pull --rebase
   popd
