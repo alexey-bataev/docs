@@ -85,6 +85,7 @@
     Plug 'adelarsq/vim-grimmjow'
     " Plug 'gilligan/vim-lldb'
     Plug 'airblade/vim-gitgutter'
+    Plug 'tenfyzhong/CompleteParameter.vim'
 
     " All of your Plugins must be added before the following line
     call plug#end()            " required
