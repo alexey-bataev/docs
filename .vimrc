@@ -322,6 +322,25 @@
     "noremap l gk
     "noremap ; l
 
+    inoremap <silent><expr> ( complete_parameter#pre_complete("()")
+    smap <c-h> <Plug>(complete_parameter#goto_next_parameter)
+    imap <c-h> <Plug>(complete_parameter#goto_next_parameter)
+    smap <c-j> <Plug>(complete_parameter#goto_previous_parameter)
+    imap <c-j> <Plug>(complete_parameter#goto_previous_parameter)
+    nmap <m-d> <Plug>(complete_parameter#overload_down)
+    imap <m-d> <Plug>(complete_parameter#overload_down)
+    smap <m-d> <Plug>(complete_parameter#overload_down)
+    nmap <m-u> <Plug>(complete_parameter#overload_up)
+    imap <m-u> <Plug>(complete_parameter#overload_up)
+    smap <m-u> <Plug>(complete_parameter#overload_up)
+
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    "                                vim-git                                  "
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+    " Turn on spell checking by default for git commit messages
+    au FileType gitcommit setlocal spell! spelllang=en_us
+  
     set showmatch " show matching brackets
 
     autocmd FileType cpp setlocal commentstring=//\ %s
