@@ -34,7 +34,7 @@ user_agnoster() {
   fi
 }
 dir_agnoster() {
- prompt_segment blue default '%~'
+ prompt_segment blue default ' %~ '
 }
 DISABLE_AUTO_UPDATE=true
 #export PATH=/usr/lib/ccache:$PATH
