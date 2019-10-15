@@ -103,10 +103,12 @@ ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(history-substring-search-up history-substring-se
 AGNOSTER_PROMPT_SEGMENTS=("prompt_status" "user_agnoster" "prompt_virtualenv" "dir_agnoster" "prompt_git" "prompt_end")
 
 clang_git() {
-  pushd ~/development/build/llvm/tools/clang
+#  pushd ~/development/build/llvm/tools/clang
+  pushd ~/development/build/llvm-project/clang
 }
 llvm_git() {
-  pushd ~/development/build/llvm
+#  pushd ~/development/build/llvm
+  pushd ~/development/build/llvm-project/llvm
 }
 llninja() {
   pushd ~/development/build
@@ -119,26 +121,34 @@ llninja() {
   popd
 }
 git_up() {
-  pushd ~/development/build/llvm/projects/compiler-rt
-  git pull --rebase
-  popd
-  pushd ~/development/build/llvm/projects/openmp
-  git pull --rebase
-  popd
-  pushd ~/development/build/llvm
-  LLVM_BR=$(git symbolic-ref --short -q HEAD)
-  git fetch && (cd tools/clang && git fetch)  # Get matching revisions of both trees.
+  pushd ~/development/build/llvm-project
+  BR=$(git symbolic-ref --short -q HEAD)
   git checkout master
-  git svn rebase -l
-  git checkout "$LLVM_BR"
-  git svn rebase -l
-  (cd tools/clang &&
-   CLANG_BR=$(git symbolic-ref --short -q HEAD) &&
-   git checkout master &&
-   git svn rebase -l &&
-   git checkout "$CLANG_BR" &&
-   git svn rebase -l)
+  git pull --rebase
+  git checkout "$BR"
+  git rebase master
   popd
+
+#  pushd ~/development/build/llvm/projects/compiler-rt
+#  git pull --rebase
+#  popd
+#  pushd ~/development/build/llvm/projects/openmp
+#  git pull --rebase
+#  popd
+#  pushd ~/development/build/llvm
+#  LLVM_BR=$(git symbolic-ref --short -q HEAD)
+#  git fetch && (cd tools/clang && git fetch)  # Get matching revisions of both trees.
+#  git checkout master
+#  git svn rebase -l
+#  git checkout "$LLVM_BR"
+#  git svn rebase -l
+#  (cd tools/clang &&
+#   CLANG_BR=$(git symbolic-ref --short -q HEAD) &&
+#   git checkout master &&
+#   git svn rebase -l &&
+#   git checkout "$CLANG_BR" &&
+#   git svn rebase -l)
+#  popd
 }
 lldbtool() { emacs -nw --eval "(lldb \"lldb -X --source ~/lldb-gud/lldb-gud.settings $*\")";}
 llvmdifftidy() {
@@ -149,5 +159,10 @@ llvmdifftidy() {
 clangdifftidy() {
   pushd ~/development/build/llvm/tools/clang
   git diff -U0 master | ~/clang_tools/llvm/tools/clang/tools/extra/clang-tidy/tool/clang-tidy-diff.py -p 1 -clang-tidy-binary ~/clang_tools/bin/clang-tidy -fix
+  popd
+}
+difftidy() {
+  pushd /localhd/abataev/development/build_llvm/llvm-project
+  git diff -U0 master | ~/clang_tools/llvm-project/clang-tools-extra/clang-tidy/tool/clang-tidy-diff.py -p 1 -clang-tidy-binary ~/clang_tools/bin/clang-tidy -fix
   popd
 }
