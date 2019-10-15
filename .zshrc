@@ -36,6 +36,40 @@ user_agnoster() {
 dir_agnoster() {
  prompt_segment blue default ' %~ '
 }
+git_agnoster() {
+  local ref dirty mode repo_path
+  if [[ -n "$vcs_info_msg_0_" ]]; then
+    dirty=$(parse_git_dirty)
+    ref=$(git symbolic-ref HEAD 2> /dev/null) || ref="➦ $(git rev-parse --short HEAD 2> /dev/null)"
+    if [[ -n $dirty ]]; then
+      prompt_segment yellow black
+    else
+      prompt_segment green black
+    fi
+    repo_path=$(git rev-parse --git-dir 2>/dev/null)
+    if [[ -e "${repo_path}/BISECT_LOG" ]]; then
+      mode=" <B>"
+    elif [[ -e "${repo_path}/MERGE_HEAD" ]]; then
+      mode=" >M<"
+    elif [[ -e "${repo_path}/rebase" || -e "${repo_path}/rebase-apply" || -e "${repo_path}/rebase-merge" || -e "${repo_path}/../.dotest" ]]; then
+      mode=" >R>"
+    fi
+
+    setopt prompt_subst
+    autoload -Uz vcs_info
+
+    zstyle ':vcs_info:*' enable git
+    #zstyle ':vcs_info:git*' get-revision true
+    zstyle ':vcs_info:git*' check-for-changes true
+    zstyle ':vcs_info:git*' stagedstr '✚'
+    zstyle ':vcs_info:git*' unstagedstr '●'
+    zstyle ':vcs_info:git*' formats ' %u%c'
+    zstyle ':vcs_info:git*' actionformats ' %u%c'
+    vcs_info
+    echo -n "${ref/refs\/heads\//$BRANCH }${vcs_info_msg_0_%% }${mode}"
+  fi
+}
+
 DISABLE_AUTO_UPDATE=true
 #export PATH=/usr/lib/ccache:$PATH
 #export CCACHE_PREFIX=clang
@@ -100,7 +134,7 @@ setopt HIST_REDUCE_BLANKS
 #ZSH_AUTOSUGGEST_CLEAR_WIDGETS=("${(@)ZSH_AUTOSUGGEST_CLEAR_WIDGETS:#(up|down)-line-or-history}")
 # Add history-substring-search-* widgets to list of widgets that clear the autosuggestion
 ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(history-substring-search-up history-substring-search-down)
-AGNOSTER_PROMPT_SEGMENTS=("prompt_status" "user_agnoster" "prompt_virtualenv" "dir_agnoster" "prompt_git" "prompt_end")
+AGNOSTER_PROMPT_SEGMENTS=("prompt_status" "user_agnoster" "prompt_virtualenv" "dir_agnoster" "git_agnoster" "prompt_end")
 
 clang_git() {
 #  pushd ~/development/build/llvm/tools/clang
