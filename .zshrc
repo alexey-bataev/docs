@@ -25,7 +25,17 @@ antigen bundle khrt/svn-n-zsh-plugin
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-history-substring-search ./zsh-history-substring-search.zsh
 antigen bundle tarruda/zsh-autosuggestions
-antigen theme https://github.com/alexey-bataev/my-agnoster my-agnoster
+#antigen theme https://github.com/alexey-bataev/my-agnoster my-agnoster
+antigen theme https://github.com/agnoster/agnoster-zsh-theme agnoster
+user_agnoster() {
+  local user=`whoami`
+  if [[ "$user" != "$DEFAULT_USER" || -n "$SSH_CONNECTION" ]]; then
+    prompt_segment red default " %(!.%{%F{yellow}%}.)$user@%m "
+  fi
+}
+dir_agnoster() {
+ prompt_segment blue default '%~'
+}
 DISABLE_AUTO_UPDATE=true
 #export PATH=/usr/lib/ccache:$PATH
 #export CCACHE_PREFIX=clang
@@ -90,6 +100,7 @@ setopt HIST_REDUCE_BLANKS
 #ZSH_AUTOSUGGEST_CLEAR_WIDGETS=("${(@)ZSH_AUTOSUGGEST_CLEAR_WIDGETS:#(up|down)-line-or-history}")
 # Add history-substring-search-* widgets to list of widgets that clear the autosuggestion
 ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(history-substring-search-up history-substring-search-down)
+AGNOSTER_PROMPT_SEGMENTS=("prompt_status" "user_agnoster" "prompt_virtualenv" "dir_agnoster" "prompt_git" "prompt_end")
 
 clang_git() {
   pushd ~/development/build/llvm/tools/clang
