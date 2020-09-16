@@ -412,7 +412,8 @@
     let g:signify_line_highlight = 0
     let g:signify_update_on_bufenter = 1
     let g:signify_vcs_cmds = {
-            \ 'svn': '...../bin/svn diff --diff-cmd %d -x -U0 -- %f' }
+            \ 'svn': '...../bin/svn diff --diff-cmd %d -x -U0 -- %f',
+            \ 'git': 'git diff --no-color --no-ext-diff -U0 master -- %f'}
     let g:indent_guides_enable_on_vim_startup = 0
     let g:clighter_heuristic_compile_args = 1
     let g:clighter_enable_cross_rename = 1
